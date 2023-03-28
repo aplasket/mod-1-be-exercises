@@ -27,7 +27,7 @@ describe Venue do
   # Iteration 2
 
   describe '#add_patron' do
-    xit 'returns a list of patrons' do
+    it 'returns a list of patrons' do
       venue = Venue.new('Bluebird', 4)
       venue.add_patron('Mike')
       venue.add_patron('Megan')
@@ -38,7 +38,7 @@ describe Venue do
   end
 
   describe '#yell_at_patrons' do
-    xit 'returns a list of uppercased names' do
+    it 'returns a list of uppercased names' do
       venue = Venue.new('Bluebird', 4)
       venue.add_patron('Mike')
       venue.add_patron('Megan')
