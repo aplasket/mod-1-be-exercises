@@ -13,7 +13,21 @@ class Potluck
 
   def get_all_from_category(category)
     dishes.select do |dish|
-      dish.category == :appetizer
+      dish.category == category
     end
+  end
+
+  def sort_dishes
+    @dishes.sort_by do |dish|
+      dish.name
+    end
+  end
+
+  def menu
+    menu = {}
+    sort_dishes.map do |dish|
+      
+    end
+
   end
 end
