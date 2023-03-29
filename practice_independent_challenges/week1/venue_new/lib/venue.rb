@@ -21,4 +21,10 @@ class Venue
       false
     end
   end
+
+  def kick_out
+    until @patrons.count < 5
+      @patrons.pop
+    end
+  end
 end
