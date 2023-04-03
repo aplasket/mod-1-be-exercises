@@ -1,5 +1,7 @@
 class Building
-  attr_reader :building_number, :building_name, :list_apartments
+  attr_accessor :building_name
+  attr_reader   :building_number,
+                :list_apartments
 
   def initialize(building_number, building_name)
     @building_number = building_number
