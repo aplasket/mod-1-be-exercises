@@ -12,7 +12,15 @@ RSpec.describe Apartment do
 
     it 'has readable attributes' do
       expect(@apartment.rented).to eq(false)
+    end
+
+    it 'checks rented status' do
       expect(@apartment.is_rented?).to eq(false)
+    end
+
+    it 'receives rent and updates rented status' do
+      @apartment.rent
+      expect(@apartment.is_rented?).to eq(true)
     end
   end
 end

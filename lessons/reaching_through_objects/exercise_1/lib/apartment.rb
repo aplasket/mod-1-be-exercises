@@ -8,4 +8,8 @@ class Apartment
   def is_rented?
     @rented
   end
+
+  def rent
+    @rented = true
+  end
 end
