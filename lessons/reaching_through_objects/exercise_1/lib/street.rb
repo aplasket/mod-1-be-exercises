@@ -1,19 +1,17 @@
 class Street
-  attr_reader :name, :buildings
+  attr_reader :street_name, :buildings_array
 
-  def initialize(name)
-    @name = name
-    @buildings = []
+  def initialize(street_name)
+    @street_name = street_name
+    @buildings_array = []
   end
 
   def add_building(building)
-    @buildings << building.building_name
-    alphabetize_buildings
+    @buildings_array << building
   end
-
-  def alphabetize_buildings
-    @buildings.map do |building|
-      building
-    end.sort
+  
+  def buildings
+    @buildings_array.map {|building| building.building_name}.sort
   end
+ 
 end
