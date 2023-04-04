@@ -123,8 +123,12 @@ p denver_biscuit_co[:hours][0][:is_open_now]
 
 # Challenge 2: 
 # Get the address, and return it into a readable format. ("3237 E Colfax Ave, Denver, CO 80206" )
+p denver_biscuit_co[:location][:display_address].join(", ")
 # Return a list of categories this restaurant fits into (["Sandwiches", "Breakfast & Brunch"])
-
+ array = []
+array << denver_biscuit_co[:categories].first.values.last 
+array << denver_biscuit_co[:categories].last.values.last 
+p array
 
 # Challenge 3 (extra spicy): 
 # Get the operation hours, and format a return value such that it looks like this: 
