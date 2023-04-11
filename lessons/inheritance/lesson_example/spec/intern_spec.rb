@@ -31,7 +31,7 @@ RSpec.describe Intern do
     # The @intern should also have the ability to have the "sick_leave" benefit, 
     # and not just the one it starts with. 
     it 'is an employee' do
-      expect(@intern).to be_a(Employee)
+      expect(@intern.is_a? Employee).to be(true)
     end
 
     it 'has attributes' do
