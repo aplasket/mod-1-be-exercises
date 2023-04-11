@@ -4,7 +4,7 @@ require './lib/intern'
 
 ali = Ceo.new(15, 20)
 ben = Manager.new(10)
-chris = Intern.new(5)
+chris = Intern.new(5, "Chris", 12345)
 
 require "pry"; binding.pry
 

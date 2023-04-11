@@ -1,8 +1,12 @@
-class Intern
+require './employee'
+
+class Intern < Employee
   attr_reader :base_salary
   
-  def initialize(base_salary)
+  def initialize(base_salary, name, id)
     @base_salary = base_salary
+    @bonus = 0
+    super(name, id)
   end
 
   def get_coffee
@@ -10,7 +14,7 @@ class Intern
   end
 
   def benefits
-    [:gets_to_get_me_coffee]
+    super.push(:gets_to_get_me_coffee)
   end
 
 end
