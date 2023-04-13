@@ -26,4 +26,16 @@ RSpec.describe Contestant do
       expect(@alexander.out_of_state?).to be(false)
     end
   end
+
+  describe "#game interests" do
+    it "starts with an empty array" do
+      expect(@alexander.game_interests).to eq([])
+    end
+
+    it "can add game interests to array" do
+      @alexander.add_game_interest('Mega Millions')
+      @alexander.add_game_interest('Pick 4')
+      expect(@alexander.game_interests).to eq(["Mega Millions", "Pick 4"])
+    end
+  end
 end
