@@ -19,6 +19,11 @@ RSpec.describe Contestant do
       expect(@alexander.state_of_residence).to eq("CO")
       expect(@alexander.spending_money).to eq(10)
     end
-    
+  end
+
+  describe "#out of state?" do
+    it "returns a boolean if contestant is out of state" do
+      expect(@alexander.out_of_state?).to be(false)
+    end
   end
 end

@@ -10,4 +10,9 @@ class Contestant
     @state_of_residence = contestant_details[:state_of_residence]
     @spending_money = contestant_details[:spending_money]
   end
+
+  def out_of_state?
+    return true unless @state_of_residence == "CO"
+    false
+  end
 end
