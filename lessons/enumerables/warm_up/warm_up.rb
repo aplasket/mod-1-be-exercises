@@ -3,11 +3,11 @@
 
 kardashians = ["kris", "kim", "kourtney", "khloe", "rob"]
 def upcase_names(names)
-  arr = []
+  transposed = []
   names.each do |name|
-    arr << name.upcase
+    transposed << name.upcase
   end
-  arr
+  transposed
 end 
 
 p upcase_names(kardashians)
@@ -25,7 +25,13 @@ p upcase_names(kardashians)
 pets = ["Brutus", "Lucky", "Goldie", "Pepper", "Odie"]
 
 def names_ending_in_ie(names)
- # your code here
+  transposed = []
+  names.each do |name|
+    if name.end_with?("ie")
+      transposed << name
+    end
+  end
+  transposed
 end 
 
 p names_ending_in_ie(pets)
@@ -43,9 +49,25 @@ p names_ending_in_ie(pets)
 nums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
 def first_num_thats_square_is_above_100(nums)
-
+  selected = []
+  nums.each do |num|
+    if num * num > 100
+      selected << num
+    end
+  end
+  selected.first  
 end 
 
 p first_num_thats_square_is_above_100(nums)
 
 # should return the integer 11
+
+# nums = (1..10)
+# selected = nums.find_all do |num|
+#   num % 3 == 0 
+# end
+# p selected
+
+nums = (1..10)
+selected = nums.find_all {|num| num % 3 == 0}
+p selected

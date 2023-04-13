@@ -14,3 +14,5 @@ p pizza_toppings.values
 p pizza_toppings[:fruit]
 # 4. how can I add the element “olives” to the key “veggies”?
 p pizza_toppings[:veggies].push("olives")
+p pizza_toppings[:veggies] << "olives"
+

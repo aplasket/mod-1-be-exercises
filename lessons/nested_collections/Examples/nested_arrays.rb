@@ -9,5 +9,6 @@ p numbers[1][1]
 p numbers.last[1]
 # 4. how can I add [7,8,9] to the numbers array
 p numbers.push([7,8,9])
+p numbers << [7,8,9]
 # 5. What element does numbers[0] return?
 [1,2,3]

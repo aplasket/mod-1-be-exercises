@@ -1,6 +1,6 @@
 class Painter
 
-  attr_reader :name
+  attr_reader :name, :paints
 
   def initialize(name)
     @name = name
@@ -26,7 +26,7 @@ class Painter
 
   def paint_names
     get_paints.map do |paint|
-      @color
+      paint.color
     end
   end
 end

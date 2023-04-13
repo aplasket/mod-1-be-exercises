@@ -46,6 +46,5 @@ RSpec.describe Manager do
     it 'has total comp' do
       expect(@manager.total_compensation).to eq(72)
     end
-
   end
 end
