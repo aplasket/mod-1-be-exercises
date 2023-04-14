@@ -24,10 +24,10 @@ class ColoradoLottery
   def register_contestant(name, game)
     if can_register?(name, game) && @registered_contestants.has_key?(game.name)
       @registered_contestants[game.name] << name
-      name
     elsif
       can_register?(name, game) && !@registered_contestants.has_key?(game.name)
       @registered_contestants[game.name] = [name]
+      name
     else
       nil
     end
