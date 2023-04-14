@@ -125,13 +125,26 @@ RSpec.describe ColoradoLottery do
   # end
 
   describe "#eligible contestants" do
-    xit "starts with an empty array of eligible contestants" do
-      expect(@lottery.eligible_contestants).to eq([])
-      expect(@lottery.eligible_contestants).to be_an(Array)
+    it "starts with an empty array of eligible contestants" do
+      expect(@lottery.eligible_contestants(@pick_4)).to eq([])
+      expect(@lottery.eligible_contestants(@mega_millions)).to be_an(Array)
     end
 
-    xit "adds eligible contestants to the array" do
-      expect(@lottery.eligible_contestants).to eq()
+    it "adds eligible contestants to the array" do
+      @alexander.add_game_interest('Pick 4')
+      @alexander.add_game_interest('Mega Millions')
+      @frederick.add_game_interest('Mega Millions')
+      @winston.add_game_interest('Cash 5')
+      @winston.add_game_interest('Mega Millions')
+      @lottery.register_contestant(@alexander, @pick_4)
+      @lottery.register_contestant(@alexander, @mega_millions)
+      @lottery.register_contestant(@frederick, @mega_millions)
+      @lottery.register_contestant(@winston, @cash_5)
+      @lottery.register_contestant(@winston, @mega_millions)
+
+      expect(@lottery.eligible_contestants(@pick_4)).to eq([@alexander])
+      expect(@lottery.eligible_contestants(@mega_millions)).to eq([@alexander, @frederick])
+      expect(@lottery.eligible_contestants(@cash_5)).to eq([@winston])
     end
   end
 

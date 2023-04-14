@@ -7,7 +7,6 @@ class ColoradoLottery
     @registered_contestants = {}
     @winners = []
     @current_contestants = {}
-    @eligible_contestants = []
   end
 
   def interested_and_18?(name, game)
@@ -33,13 +32,16 @@ class ColoradoLottery
     end
   end
 
-  # def determine_eligible_contestants
-    # require 'pry'; binding.pry
-    # @eligible_contestants << 
-    #all contestants that are registered &&
-    # have more spending money than the cost of game
-    #returns an array of contestant objects
-  # end
+  def eligible_contestants(game)
+    if @registered_contestants[game.name].nil?
+      # require 'pry'; binding.pry
+      eligible_contestants = []
+    else
+      eligible_contestants = @registered_contestants[game.name].select do |contestant|
+        contestant.spending_money > game.cost
+      end
+    end
+  end
 
   # def current_contestants
     #returns a hash
