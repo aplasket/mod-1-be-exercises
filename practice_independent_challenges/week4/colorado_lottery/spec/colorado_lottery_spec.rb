@@ -75,4 +75,30 @@ RSpec.describe ColoradoLottery do
     end
   end
 
+  describe "#register contestant" do
+    it "can register qualified contestants" do
+      expect(@lottery.register_contestant(@alexander, @pick_4)).to eq(@alexander)
+      expect(@lottery.register_contestant(@frederick, @mega_millions)).to eq(@frederick)
+      expect(@lottery.register_contestant(@winston, @pick_4)).to be(nil)
+    end
+  end
+
+  before(:each) do
+    @lottery.register_contestant(@alexander, @pick_4)
+    @lottery.register_contestant(@alexander, @mega_millions)
+    @lottery.register_contestant(@frederick, @mega_millions)
+    @lottery.register_contestant(@winston, @cash_5)
+  end
+
+  describe "#eligible contestants" do
+    xit "starts with an empty array of eligible contestants" do
+      expect(@lottery.eligible_contestants).to eq([])
+      expect(@lottery.eligible_contestants).to be_an(Array)
+    end
+
+    xit "adds eligible contestants to the array" do
+      expect(@lottery.eligible_contestants).to eq()
+    end
+  end
+
 end
