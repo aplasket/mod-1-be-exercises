@@ -49,17 +49,20 @@ RSpec.describe ColoradoLottery do
     end
   end
 
-  before(:each) do
-    @alexander.add_game_interest('Pick 4')
-    @alexander.add_game_interest('Mega Millions')
-    @frederick.add_game_interest('Mega Millions')
-    @winston.add_game_interest('Cash 5')
-    @winston.add_game_interest('Mega Millions')
-    @benjamin.add_game_interest('Mega Millions')
-  end
+  # before(:each) do
+  #   @alexander.add_game_interest('Pick 4')
+  #   @alexander.add_game_interest('Mega Millions')
+  #   @frederick.add_game_interest('Mega Millions')
+  #   @winston.add_game_interest('Cash 5')
+  #   @winston.add_game_interest('Mega Millions')
+  #   @benjamin.add_game_interest('Mega Millions')
+  # end
 
   describe "#interested and 18" do
     it "can return boolean of candidate is interested and 18" do
+      @benjamin.add_game_interest('Mega Millions')
+      @alexander.add_game_interest('Pick 4')
+
       expect(@lottery.interested_and_18?(@alexander, @pick_4)).to be(true)
       expect(@lottery.interested_and_18?(@benjamin, @mega_millions)).to be(false)
     end
@@ -67,6 +70,11 @@ RSpec.describe ColoradoLottery do
 
   describe "#can register" do
     it "can return a boolean if candidate can register" do
+      @alexander.add_game_interest('Pick 4')
+      @alexander.add_game_interest('Mega Millions')
+      @frederick.add_game_interest('Mega Millions')
+      @benjamin.add_game_interest('Mega Millions')
+      
       expect(@lottery.can_register?(@alexander, @pick_4)).to be(true)
       expect(@lottery.can_register?(@alexander, @cash_5)).to be(false)
       expect(@lottery.can_register?(@frederick, @mega_millions)).to be(true)
@@ -77,18 +85,44 @@ RSpec.describe ColoradoLottery do
 
   describe "#register contestant" do
     it "can register qualified contestants" do
+      @alexander.add_game_interest('Pick 4')
+      @frederick.add_game_interest('Mega Millions')
+
       expect(@lottery.register_contestant(@alexander, @pick_4)).to eq(@alexander)
       expect(@lottery.register_contestant(@frederick, @mega_millions)).to eq(@frederick)
       expect(@lottery.register_contestant(@winston, @pick_4)).to be(nil)
     end
+
+    it "can return a hash of registered contestants" do
+      @alexander.add_game_interest('Pick 4')
+      @alexander.add_game_interest('Mega Millions')
+      @frederick.add_game_interest('Mega Millions')
+      @winston.add_game_interest('Cash 5')
+      @winston.add_game_interest('Mega Millions')
+
+      @lottery.register_contestant(@alexander, @pick_4)
+      expect(@lottery.registered_contestants).to eq({"Pick 4" => [@alexander]})
+      
+      @lottery.register_contestant(@alexander, @mega_millions)
+      expect(@lottery.registered_contestants).to eq({"Pick 4" => [@alexander], "Mega Millions" => [@alexander]})
+      
+      @lottery.register_contestant(@frederick, @mega_millions)
+      expect(@lottery.registered_contestants).to eq({"Pick 4" => [@alexander], "Mega Millions" => [@alexander, @frederick]})
+
+      @lottery.register_contestant(@winston, @mega_millions)
+      expect(@lottery.registered_contestants).to eq({"Pick 4" => [@alexander], "Mega Millions" => [@alexander, @frederick, @winston]})
+    
+      @lottery.register_contestant(@winston, @cash_5)
+      expect(@lottery.registered_contestants).to eq({"Pick 4" => [@alexander], "Mega Millions" => [@alexander, @frederick, @winston], "Cash 5" => [@winston]})
+    end
   end
 
-  before(:each) do
-    @lottery.register_contestant(@alexander, @pick_4)
-    @lottery.register_contestant(@alexander, @mega_millions)
-    @lottery.register_contestant(@frederick, @mega_millions)
-    @lottery.register_contestant(@winston, @cash_5)
-  end
+  # before(:each) do
+  #   @lottery.register_contestant(@alexander, @pick_4)
+  #   @lottery.register_contestant(@alexander, @mega_millions)
+  #   @lottery.register_contestant(@frederick, @mega_millions)
+  #   @lottery.register_contestant(@winston, @cash_5)
+  # end
 
   describe "#eligible contestants" do
     xit "starts with an empty array of eligible contestants" do

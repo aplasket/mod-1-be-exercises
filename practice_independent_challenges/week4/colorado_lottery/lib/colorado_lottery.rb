@@ -22,11 +22,20 @@ class ColoradoLottery
   end
 
   def register_contestant(name, game)
-    return nil unless can_register?(name, game)
-    name
+    if can_register?(name, game) && @registered_contestants.has_key?(game.name)
+      @registered_contestants[game.name] << name
+      name
+    elsif
+      can_register?(name, game) && !@registered_contestants.has_key?(game.name)
+      @registered_contestants[game.name] = [name]
+    else
+      nil
+    end
   end
 
-  # def eligible_contestants
+  # def determine_eligible_contestants
+    # require 'pry'; binding.pry
+    # @eligible_contestants << 
     #all contestants that are registered &&
     # have more spending money than the cost of game
     #returns an array of contestant objects
