@@ -49,19 +49,17 @@ RSpec.describe ColoradoLottery do
     end
   end
 
-    # @alexander.add_game_interest('Pick 4')
-    # @alexander.add_game_interest('Mega Millions')
-    # @frederick.add_game_interest('Mega Millions')
-    # @winston.add_game_interest('Cash 5')
-    # @winston.add_game_interest('Mega Millions')
-    # @benjamin.add_game_interest('Mega Millions')
-
+  before(:each) do
+    @alexander.add_game_interest('Pick 4')
+    @alexander.add_game_interest('Mega Millions')
+    @frederick.add_game_interest('Mega Millions')
+    @winston.add_game_interest('Cash 5')
+    @winston.add_game_interest('Mega Millions')
+    @benjamin.add_game_interest('Mega Millions')
+  end
 
   describe "#interested and 18" do
     it "can return boolean of candidate is interested and 18" do
-      @alexander.add_game_interest('Pick 4')
-      @alexander.add_game_interest('Mega Millions')
-      @benjamin.add_game_interest('Mega Millions')
       expect(@lottery.interested_and_18?(@alexander, @pick_4)).to be(true)
       expect(@lottery.interested_and_18?(@benjamin, @mega_millions)).to be(false)
     end
@@ -69,11 +67,6 @@ RSpec.describe ColoradoLottery do
 
   describe "#can register" do
     it "can return a boolean if candidate can register" do
-      @alexander.add_game_interest('Pick 4')
-      @alexander.add_game_interest('Mega Millions')
-      @frederick.add_game_interest('Mega Millions')
-      @benjamin.add_game_interest('Mega Millions')
-
       expect(@lottery.can_register?(@alexander, @pick_4)).to be(true)
       expect(@lottery.can_register?(@alexander, @cash_5)).to be(false)
       expect(@lottery.can_register?(@frederick, @mega_millions)).to be(true)
