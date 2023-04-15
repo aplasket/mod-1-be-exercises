@@ -146,6 +146,24 @@ RSpec.describe ColoradoLottery do
       expect(@lottery.eligible_contestants(@mega_millions)).to eq([@alexander, @frederick])
       expect(@lottery.eligible_contestants(@cash_5)).to eq([@winston])
     end
+
+    describe "#charge contestants" do
+      it "can charge an eligble contestant" do
+        @alexander.add_game_interest('Pick 4')
+        @alexander.add_game_interest('Mega Millions')
+        @frederick.add_game_interest('Mega Millions')
+        @winston.add_game_interest('Cash 5')
+        @winston.add_game_interest('Mega Millions')
+        @lottery.register_contestant(@alexander, @pick_4)
+        @lottery.register_contestant(@alexander, @mega_millions)
+        @lottery.register_contestant(@frederick, @mega_millions)
+        @lottery.register_contestant(@winston, @cash_5)
+        @lottery.register_contestant(@winston, @mega_millions)
+
+        expect(@lottery.charge_contestants(@pick_4)).to eq(@alexander)
+        expect(@alexander.spending_money).to eq(8)
+      end
+    end
   end
 
 end

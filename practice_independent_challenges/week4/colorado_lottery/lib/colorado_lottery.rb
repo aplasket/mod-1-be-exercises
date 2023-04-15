@@ -34,7 +34,6 @@ class ColoradoLottery
 
   def eligible_contestants(game)
     if @registered_contestants[game.name].nil?
-      # require 'pry'; binding.pry
       eligible_contestants = []
     else
       eligible_contestants = @registered_contestants[game.name].select do |contestant|
@@ -43,8 +42,12 @@ class ColoradoLottery
     end
   end
 
-  # def current_contestants
-    #returns a hash
+  def charge_contestants(game)
+    #current contestants - returns a hash
     # game_object: [eligible_contestants]
-  # end
+    eligible_contestants(game).map do |contestant|
+      require 'pry'; binding.pry
+      contestant.spending_money -= game.cost
+    end
+  end
 end
