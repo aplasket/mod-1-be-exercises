@@ -50,7 +50,67 @@ RSpec.describe Dock do
 
       expect(@dock.charge(@sup_1)).to eq({:card_number => "1313131313131313",
                                             :amount => 15})
+    end
+  end
+
+  describe "#return" do
+    it "returns boats when finished renting" do
+      @dock.rent(@kayak_1, @patrick)
+      @dock.rent(@kayak_2, @patrick)
+      @dock.rent(@sup_1, @eugene)
+      2.times { @kayak_1.add_hour }
+      4.times { @kayak_2.add_hour }
+      @sup_1.add_hour
       
+      expect(@dock.returned_boats).to eq({})
+
+      @dock.return(@kayak_1)
+      expect(@dock.returned_boats).to eq({@kayak_1 => @patrick})
+      @dock.return(@kayak_2)
+      expect(@dock.returned_boats).to eq({@kayak_1 => @patrick,
+                                          @kayak_2 => @patrick})
+    end
+  end
+
+  describe "#log hour" do
+    it "adds additional hour to boats currently rented" do
+      @dock.rent(@kayak_1, @patrick)
+      @dock.rent(@kayak_2, @patrick)
+      @dock.rent(@sup_1, @eugene)
+      @kayak_1.add_hour 
+      2.times{ @kayak_2.add_hour }
+
+      expect(@kayak_1.hours_rented).to eq(1)
+      expect(@kayak_2.hours_rented).to eq(2)
+
+      @dock.log_hour
+
+      expect(@kayak_1.hours_rented).to eq(2)
+      expect(@kayak_2.hours_rented).to eq(3)
+    end
+  end
+
+  describe "#revenue" do
+    it "collects revenue for all returned boats" do
+      @dock.rent(@kayak_1, @patrick)
+      @dock.rent(@kayak_2, @patrick)
+      @dock.rent(@sup_1, @eugene)
+      @kayak_1.add_hour 
+      @sup_1.add_hour
+      2.times{ @kayak_2.add_hour }
+      @dock.return(@kayak_1)
+
+      expect(@dock.returned_boats).to eq({@kayak_1 => @patrick})
+      expect(@dock.revenue).to eq(20)
+      
+      @dock.log_hour
+      @dock.return(@kayak_2)
+      @dock.return(@sup_1)
+
+      expect(@dock.returned_boats).to eq({@kayak_1 => @patrick,
+                                          @kayak_2 => @patrick,
+                                          @sup_1 => @eugene})
+      expect(@dock.revenue).to eq(110)
     end
   end
 end
