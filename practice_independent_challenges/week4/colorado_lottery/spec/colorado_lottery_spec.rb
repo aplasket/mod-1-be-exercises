@@ -65,6 +65,7 @@ RSpec.describe ColoradoLottery do
 
       expect(@lottery.interested_and_18?(@alexander, @pick_4)).to be(true)
       expect(@lottery.interested_and_18?(@benjamin, @mega_millions)).to be(false)
+      expect(@lottery.interested_and_18?(@alexander, @cash_5)).to be(false)
     end
   end
 
