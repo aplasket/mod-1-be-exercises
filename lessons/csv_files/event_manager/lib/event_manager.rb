@@ -54,7 +54,7 @@ puts "EventManager initialized."
 # end
 
 #fixing nil and/or bad zip code formatting
-contents = CSV.open 'event_attendees.csv', headers: true, header_converters: :symbol
+# contents = CSV.open 'event_attendees.csv', headers: true, header_converters: :symbol
 
 # contents.each do |row|
 #   name = row[:first_name]
@@ -84,14 +84,37 @@ contents = CSV.open 'event_attendees.csv', headers: true, header_converters: :sy
 #   end
 # end
 
-#refactored clean zipcode:
-def clean_zipcode(zipcode)
-  zipcode.to_s.rjust(5,"0")[0..4]
-end
+# #refactored clean zipcode:
+# def clean_zipcode(zipcode)
+#   zipcode.to_s.rjust(5,"0")[0..4]
+# end
 
-contents.each do |row|
-  name = row[:first_name]
-  zipcode = row[:zipcode]
-  clean_zipcode(zipcode)
-  puts "#{name} #{zipcode}"
+# contents.each do |row|
+#   name = row[:first_name]
+#   zipcode = row[:zipcode]
+#   clean_zipcode(zipcode)
+#   puts "#{name} #{zipcode}"
+# end
+
+
+## reads Attendee file
+
+class EventManager
+
+  def initialize
+    @all_attendees = []
+  end
+  
+  contents = CSV.open 'event_attendees.csv', headers: true, header_converters: :symbol
+  contents.each do |row|
+    name = row[:first_name]
+    zipcode = row[:zipcode]
+    clean_zipcode(zipcode)
+    puts "#{name} #{zipcode}"
+  end
+
+  def add_attendee(attendee_object)
+    @all_attendees << attendee_object
+  end
+
 end
