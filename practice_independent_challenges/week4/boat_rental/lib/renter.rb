@@ -1,7 +1,6 @@
 class Renter
-  attr_reader :name
-              
-  attr_accessor :credit_card_number
+  attr_reader :name,
+              :credit_card_number
 
   def initialize(name, credit_card_number)
     @name = name
