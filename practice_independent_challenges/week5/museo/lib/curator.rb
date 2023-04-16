@@ -47,4 +47,14 @@ class Curator
 
     artists_array
   end
+
+  def photos_by_country(country_name)
+    photos_array = []
+    photographs_by_artist.each_key do |artist|
+      if artist.country == country_name
+        photos_array =  photographs_by_artist[artist]
+      end
+    end
+    photos_array
+  end
 end
