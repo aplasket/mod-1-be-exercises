@@ -20,4 +20,41 @@ class Curator
       artist.id == id_num
     end
   end
+
+  def photographs_by_artist
+    artists_photos = {}
+
+    @photographs.map do |photo|
+      artist_object = find_artist_by_id(photo.artist_id)
+      if artists_photos.keys.include?(artist_object)
+        artists_photos[artist_object] << photo
+      else
+        artists_photos[artist_object] = [photo]
+      end
+    end
+
+    artists_photos
+  end
+
+  def artists_multiple_photos
+    artists_array = []
+
+    photographs_by_artist.each_key do |artist|
+      if photographs_by_artist[artist].count > 1
+        artists_array << artist.name
+      end
+    end
+
+    artists_array
+  end
+
+  def photos_by_country(country_name)
+    photos_array = []
+    photographs_by_artist.each_key do |artist|
+      if artist.country == country_name
+        photos_array =  photographs_by_artist[artist]
+      end
+    end
+    photos_array
+  end
 end
