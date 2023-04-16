@@ -40,7 +40,10 @@ class ColoradoLottery
 
   def charge_contestants(game)
     contestants = eligible_contestants(game)
-    contestant_name = eligible_contestants(game).map {|contestant| contestant.full_name}
+    contestant_name = eligible_contestants(game).map do |contestant| 
+      contestant.spending_money -= game.cost
+      contestant.full_name
+    end
     @current_contestants[game] = contestant_name
   end
 end
