@@ -16,33 +16,31 @@ class ColoradoLottery
   end
 
   def can_register?(contestant, game)
-    if interested_and_18?(contestant, game) &&
-      (!contestant.out_of_state? || game.national_drawing?)
-      @registered_contestants[contestant] = game
-      true
+    return false unless interested_and_18?(contestant, game) &&
+                    (!contestant.out_of_state? || game.national_drawing?)
+    true
+  end
+
+  def register_contestant(contestant, game)
+    return nil if !can_register?(contestant, game)
+    if can_register?(contestant, game) && @registered_contestants.include?(game.name)
+      @registered_contestants[game.name] << contestant
     else
-      false
+      @registered_contestants[game.name] = [contestant]
     end
+    
+    contestant
   end
 
-  def register_contestants 
-    #return a Contestant object
-    # We will only register contestants that #can_register?
-
-    @registered_contestants.each_key do |contestant| contestant
-      require 'pry'; binding.pry
-
-    end
+  def eligible_contestants(game)
+    return [] if @registered_contestants.empty?
+    
+    @registered_contestants[game.name].find_all {|contestant| contestant.spending_money > game.cost}    
   end
 
-  # def eligible_contestants
-    #return an array of Contestant objects
-    #who have been registered to play a given game 
-    # and that have more spending_money than the cost.
-  # end
-
-  # def current_contestants
-    #return hash of contestant names who have been charged, organized by game.
-    # {game: [contestant.full_name], game: [contestant.full_name]}
-  # end
+  def charge_contestants(game)
+    contestants = eligible_contestants(game)
+    contestant_name = eligible_contestants(game).map {|contestant| contestant.full_name}
+    @current_contestants[game] = contestant_name
+  end
 end
