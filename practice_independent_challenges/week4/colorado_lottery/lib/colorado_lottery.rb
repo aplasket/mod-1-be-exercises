@@ -9,45 +9,41 @@ class ColoradoLottery
     @current_contestants = {}
   end
 
-  def interested_and_18?(name, game)
-    return false unless name.game_interests.include?(game.name) && name.age >= 18
+  def interested_and_18?(contestant, game)
+    return false unless contestant.game_interests.include?(game.name) &&
+                        contestant.age >= 18
     true
   end
 
-  def can_register?(name, game)
-    return false unless interested_and_18?(name, game) &&
-                        (!name.out_of_state? || game.national_drawing?)
+  def can_register?(contestant, game)
+    return false unless interested_and_18?(contestant, game) &&
+                    (!contestant.out_of_state? || game.national_drawing?)
     true
   end
 
-  def register_contestant(name, game)
-    if can_register?(name, game) && @registered_contestants.has_key?(game.name)
-      @registered_contestants[game.name] << name
-    elsif
-      can_register?(name, game) && !@registered_contestants.has_key?(game.name)
-      @registered_contestants[game.name] = [name]
-      name
+  def register_contestant(contestant, game)
+    return nil if !can_register?(contestant, game)
+    if can_register?(contestant, game) && @registered_contestants.include?(game.name)
+      @registered_contestants[game.name] << contestant
     else
-      nil
+      @registered_contestants[game.name] = [contestant]
     end
+    
+    contestant
   end
 
   def eligible_contestants(game)
-    if @registered_contestants[game.name].nil?
-      eligible_contestants = []
-    else
-      eligible_contestants = @registered_contestants[game.name].select do |contestant|
-        contestant.spending_money > game.cost
-      end
-    end
+    return [] if @registered_contestants.empty?
+    
+    @registered_contestants[game.name].find_all {|contestant| contestant.spending_money > game.cost}    
   end
 
   def charge_contestants(game)
-    #current contestants - returns a hash
-    # game_object: [eligible_contestants]
-    eligible_contestants(game).map do |contestant|
-      require 'pry'; binding.pry
+    contestants = eligible_contestants(game)
+    contestant_name = eligible_contestants(game).map do |contestant| 
       contestant.spending_money -= game.cost
+      contestant.full_name
     end
+    @current_contestants[game] = contestant_name
   end
 end
