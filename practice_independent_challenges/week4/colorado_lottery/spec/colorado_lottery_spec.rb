@@ -92,4 +92,22 @@ RSpec.describe ColoradoLottery do
       expect(@lottery.can_register?(@benjamin, @mega_millions)).to be(false)
     end
   end
+
+  describe "register contestants" do
+    before(:each) do
+      @lottery.can_register?(@alexander, @pick_4)
+      @lottery.can_register?(@alexander, @cash_5)
+      @lottery.can_register?(@frederick, @mega_millions)
+      @lottery.can_register?(@frederick, @cash_5)
+      @lottery.can_register?(@benjamin, @mega_millions)
+    end
+    
+    it "returns a Contestant object after registering" do
+      expect(@lottery.register_contestants).to be_a(Contestant)
+    end
+    
+    xit "adds registered contestants to registered contestants array" do
+
+    end
+  end
 end
