@@ -1,10 +1,16 @@
 # ./lib/event_manager.rb
-require "csv"
+# puts "EventManager initialized."
 
-puts "EventManager initialized."
-
-# contents = File.read "event_attendees.csv"
+# contents = File.read "data/event_attendees.csv"
 # puts contents
+
+## or we can use CSV ruby parsing:
+# contents = CSV.open "data/event_attendees.csv", headers: true
+# contents.each do |row|
+#   require 'pry'; binding.pry
+#   name = row[:first_name]
+#   puts name
+# end
 
 # puts File.exist? "event_attendees.csv"
 
@@ -98,23 +104,19 @@ puts "EventManager initialized."
 
 
 ## reads Attendee file
+require "csv"
 
 class EventManager
+  attr_reader :attendees
 
-  def initialize
-    @all_attendees = []
+  def initialize(csv)
+    @attendees = (CSV.open csv, headers: true, header_converters: :symbol).map do |row|
+      attendee = Attendee.new(
+        row[:id],
+        row[:first_name],
+        row[:last_name],
+        row[:zipcode],
+      )
+    end
   end
-  
-  contents = CSV.open 'event_attendees.csv', headers: true, header_converters: :symbol
-  contents.each do |row|
-    name = row[:first_name]
-    zipcode = row[:zipcode]
-    clean_zipcode(zipcode)
-    puts "#{name} #{zipcode}"
-  end
-
-  def add_attendee(attendee_object)
-    @all_attendees << attendee_object
-  end
-
 end
