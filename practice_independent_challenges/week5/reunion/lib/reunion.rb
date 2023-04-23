@@ -26,6 +26,22 @@ class Reunion
     # owed money. For example, if "Maria" owes 10 from brunch and is 
     # owed 20 from drinks, her final amount owed in the breakout is -10.
 
+    #pesudocode: 
+    # calculate the @activity.owed for each activity and participant 
+    # if total[person] exists, += amount owed of the next activity
+    # if total[person] does not exist, total[person] = amount owed
+
+    total = {}
+    @activities.each do |activity|
+      activity.participants.each do |participant, amount|
+        if total.keys.include?(participant)
+          total[participant] += activity.split - amount
+        else
+          total[participant] = activity.split - amount
+        end
+      end
+    end
+    total
   end
 
   def summary

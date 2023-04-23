@@ -30,7 +30,7 @@ RSpec.describe Reunion do
   end
 
   describe "#total cost" do
-    before(:each) do
+    it "calculates the total cost of the reunion" do
       @reunion.add_activity(@activity_1)
       @reunion.add_activity(@activity_2)
       @activity_1.add_participant("Maria", 20)
@@ -38,10 +38,24 @@ RSpec.describe Reunion do
       @activity_2.add_participant("Maria", 60)
       @activity_2.add_participant("Luther", 60)
       @activity_2.add_participant("Louis", 0)
-    end
 
-    it "calculates the total cost of the reunion" do
       expect(@reunion.total_cost).to eq(180)
+    end
+  end
+
+  describe "#total owed" do 
+    it "calculates how much each person is owed or owes" do
+      @reunion.add_activity(@activity_1)
+      @reunion.add_activity(@activity_2)
+      @activity_1.add_participant("Maria", 20)
+      @activity_1.add_participant("Luther", 40)
+      @activity_2.add_participant("Maria", 60)
+      @activity_2.add_participant("Luther", 60)
+      @activity_2.add_participant("Louis", 0)
+
+      expect(@activity_1.split).to eq(30)
+      expect(@activity_2.split).to eq(40)
+      expect(@reunion.total_owed).to eq({"Maria" => -10, "Luther" => -30, "Louis" => 40})
     end
   end
 end
