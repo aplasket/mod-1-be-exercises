@@ -47,6 +47,13 @@ class Reunion
   def summary
     #Each Reunion can print a summary of each participant's name 
     #and what they owe, separated by a line break.
-
+    # p name: total_owed \n ...
+    
+    total_owed.map do |person, amount|
+      require 'pry'; binding.pry
+      "#{person}: #{amount}".join("\n")
+    end
+    
+    # require 'pry'; binding.pry
   end
 end
